@@ -1,5 +1,6 @@
 #Connor Peterson
 #csp8fy
+
 from z3 import *
 
 x = Bool("x")
