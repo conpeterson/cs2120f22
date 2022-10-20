@@ -13,7 +13,9 @@ answer.
 -/
 
 def and_associative : Prop := 
-  _
+  ∀ (P Q R : Prop),
+    (P ∧ (Q ∧ R)) ↔
+    (P ∧ Q) ∧ R P p
 
 
 /- #1B [10 points]
@@ -24,10 +26,11 @@ that you use in your reasoning.
 -/
 
 /-
-Answer: 
--/
+Answer: The inference rules that can be used in my reasoning are the rule of iff.intro and
+the elimination AND rule.
 
-/- #1C [5 points]
+-/
+/--/ #1C [5 points]
 
 Give a formal proof of the proposition.
 Hint: unfold and_associative to start.
@@ -35,6 +38,13 @@ Hint: unfold and_associative to start.
 
 theorem and_assoc_true : and_associative :=
 begin
+  unfold and_associative,
+  assume (p : P) (q : Q) (r : R),
+  apply (iff.intro p q r),
+  exact p,
+  exact q,
+  exact r,
+
 end
 
 
@@ -46,7 +56,9 @@ analogous to the proposition about ∧ in #1.
 -/
 
 def or_associative : Prop := 
-  _
+  ∀ (P Q R : Prop),
+    (P ∨ (Q ∨ R)) ↔
+    (P ∨ Q) ∨ R
 
 
 /- #2B [10 points]
@@ -54,6 +66,9 @@ def or_associative : Prop :=
 Write an English language proof of it, citing
 the specific inference rules you use in your
 reasoning.
+
+The inference rules that can be used in my reasoning are the rule of iff.intro and
+the elimination OR rule.
 -/
 
 
@@ -64,6 +79,12 @@ Complete the following formal proof.
 
 theorem or_associative_true : or_associative :=
 begin
+  unfold or_associative,
+  assume (p : P) (q : Q) (r : R),
+  apply (iff.intro p q r),
+  exact p,
+  exact q,
+  exact r,
 end
 
 
@@ -72,7 +93,7 @@ Write a formal statement of the proposition.
 -/
 
 def arrow_transitive : Prop :=
-  _
+  (X → Y) → (Y → Z) → (X → Z)
 
 
 /- #3B [10 points]
@@ -86,13 +107,25 @@ have a proof of X, you can derive a proof of Y by
 arrow elimination. Think of it as applying a proof
 of an implication to a proof of its premise to get
 yourself a proof of its conclusion.
+
+Let X, Y, and Z be arbitrary but specific propositions. To prove (X → Y) → (Y → Z) → (X → Z),
+assume (X → Y) → (Y → Z) as a hypothesis. By the introduction rule for ∀, 
+we deduce X, Y, and Z. We now prove X → Z by → introduction on either side. In further English terms, when given a function that shows that for any proof of X also gives the proof of Y shows that 
+whenever X is true, so is Y. This means that X implies Y. Additionally, when given a function that 
+proves whenever Y is true, so is Z. By the transitive propery, this function would also serve to show 
+that whenever X is true, so is Z. This means that if X implies Y, and Y implies Z, then X implies Z.
 -/
 
 
 /- #3C [5 points]. 
 Write a formal proof of it.
 -/
-
+example : (X → Y) → (Y → Z) → (X → Z) :=
+begin
+assume h,
+cases h with x y z,
+apply iff.intro h,
+end
 
 /- #4
 Suppose that if it's raining then the streets
@@ -106,9 +139,15 @@ Start by writing the proposition in predicate
 logic by completing the following answer.
 -/
 
-def contrapositive : Prop :=
-  ∀ (Raining Wet : Prop), 
-    (Raining → Wet) → (¬Raining → ¬Wet)
+def contrapositive :=
+  (Raining → Wet) →  (¬Raining → ¬Wet)
+
+/-
+OR
+-/
+  (∀ (Raining Wet : Prop), Raining → Wet)
+    ∀ (Raining Wet : Prop),
+      ¬Raining → ¬Wet
 
 
 /- #4B [10 points]. 
@@ -116,10 +155,22 @@ def contrapositive : Prop :=
 
 theorem contrapositive_valid : contrapositive :=
 begin
+unfold contrapositive,
+assume Raining,
+assume Wet,
+assume nRaining,
+assume nWet,
+cases nWet with Raining Wet,
+exact nWet,
+apply neg_elim,
+end
 
 /- #4C [5 points]. 
 
 Give an English language proof of it.
+Let Raining and Wet be arbitrary but specific propositions. To prove (Raining → Wet) → (¬Raining → ¬Wet),
+assume (Raining → Wet) as a hypothesis. By the rule of negation for ∀, 
+we deduce Rainind and Wet. We now prove (¬Raining → ¬Wet) by negation elimination. 
 -/
 
 
@@ -141,7 +192,7 @@ begin
 assume em X Y nxory,
 cases (em X) with x nx,
 let foo := or.intro_left Y x,
-_
+apply false.elim foo,
 end
 
 /-
