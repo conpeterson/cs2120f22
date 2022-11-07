@@ -84,6 +84,15 @@ need to complete the proof of Q → R.
 that R is true by provind a proof of
 it.)
 -/
+assume ptor,
+assume qtor,
+apply ptor,
+exact p,
+
+assume ptor,
+assume qtor,
+apply qtor,
+exact q,
 end
 
 /-
