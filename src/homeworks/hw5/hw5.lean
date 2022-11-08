@@ -24,7 +24,7 @@ State and prove the proposition that there's some
 natural number whose square is 144.
 -/
 
-example : _ := _
+example :  := _
 
 
 /- #1B.
