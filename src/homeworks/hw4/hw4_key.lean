@@ -158,6 +158,16 @@ have a proof of X, you can derive a proof of Y by
 arrow elimination. Think of it as applying a proof
 of an implication to a proof of its premise to get
 yourself a proof of its conclusion.
+
+ANSWER:
+
+Assume arbitrary P Q and R. What's left to prove is an implication. 
+We assume the premises P → Q and Q → R. Whats left to prove is that P implies
+R. We then assume a proof of P, and then apply it to the proof of P → Q to get a
+proof of Q. We then obtain our goal by applying the proof of Q to the proof of Q → R to 
+get a proof of R.
+
+We assume the premise to prove the Implication*
 -/
 
 
@@ -225,7 +235,7 @@ end
 
 /- #4C [5 points]. 
 
-Give an English language proof of it.
+Give an English language proof of it. 
 -/
 
 
